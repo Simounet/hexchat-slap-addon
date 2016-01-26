@@ -5,7 +5,7 @@ from random import choice
 import hexchat
 
 __module_name__ = 'Slap'
-__module_version__ = '2.1'
+__module_version__ = '2.2'
 __module_description__ = 'Slaps specified users'
 __author__ = 'Douglas Brunal (AKA) Frankity'
 
@@ -39,6 +39,10 @@ def slap_cb(word, word_eol, userdata):
         hexchat.command('help slap')
     return hexchat.EAT_ALL
 
+def slap_menu():
+    hexchat.command("MENU -p4 ADD \"$NICK/Slap\"")
+    for i in slaps:
+        hexchat.command("MENU ADD \"$NICK/Slap/" + i + "\" \"slap " + i + " %s\"")
 
 def unload_cb(userdata):
     print(__module_name__, 'version', __module_version__, 'unloaded.')
@@ -47,5 +51,6 @@ hexchat.hook_command('slap', slap_cb, help=("Random slap:\n"
                                             "/slap <nick>\n"
                                             "Specific slap:\n"
                                             "/slap <key> <nick>"))
+slap_menu()
 hexchat.hook_unload(unload_cb)
 print(__module_name__, 'version', __module_version__, 'loaded.')
